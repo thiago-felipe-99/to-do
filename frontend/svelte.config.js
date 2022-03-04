@@ -10,7 +10,16 @@ const config = {
 
   preprocess: preprocess(),
 
-  kit: { adapter: adapter() }
+  kit: {
+    adapter:        adapter(),
+    methodOverride: {
+      allowed: [
+        "PUT",
+        "PATCH",
+        "DELETE"
+      ]
+    }
+  }
 };
 
 export default config;
