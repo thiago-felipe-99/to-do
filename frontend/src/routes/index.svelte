@@ -1,28 +1,27 @@
+<script lang="ts" context="module">
+  import type { Todo } from "$lib/interface";
+
+  //@type {import('@sveltejs/kit').Load}
+  export async function load({ fetch }) {
+    const response = await fetch("/api/todo");
+    const json = await response.json() as Todo[];
+
+    return { props: { todos: json } };
+  }
+</script>
+
 <script lang="ts">
   import Task from "$lib/task.svelte";
   const redirect = "/";
 
-  const todos = [
-    {
-      id:          "1",
-      title:       "teste",
-      description: "qualquer",
-      done:        false
-    },
-    {
-      id:          "2",
-      title:       "teste",
-      description: "qualquer",
-      done:        true
-    }
-  ];
+  export let todos:Todo[] = [];
 </script>
 
 <main>
   <h1>To Do List</h1>
 
   <h2>Create Task</h2>
-  <form method="post" action="/api/todo&noJS&redirect={redirect}">
+  <form method="post" action="/api/todo?noJS=true&redirect={redirect}">
     <input class="big" placeholder="Title" name="title"/>
     <input placeholder="Description" name="description"/>
     <button>Add</button>
