@@ -1,24 +1,28 @@
 import type { Todo, RequestHandlerOutput } from "$lib/interface";
 import { v4 as uuidv4 } from "uuid";
-
-const todos: Todo[] = [];
+import { create, getAll } from "./_api";
 
 export function get(): RequestHandlerOutput<Todo[]> {
   return {
     status: 200,
-    body:   todos
+    body:   getAll()
   };
 }
 
 export async function post({ request }: {request: Request}) {
   const body = await request.json();
 
-  todos.push({
+  const todo = {
     id:          uuidv4(),
     done:        false,
-    title:       body.title,
-    description: body.description
-  });
+    title:       body.title || "",
+    description: body.description || ""
+  };
 
-  return { status: 200 };
+  create(todo);
+
+  return {
+    status: 201,
+    body:   todo
+  };
 }

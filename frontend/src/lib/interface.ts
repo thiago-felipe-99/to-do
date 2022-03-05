@@ -3,8 +3,9 @@ import type {
   RequestHandlerOutput as GenericRequestHandlerOutput
 } from "@sveltejs/kit";
 
-export type RequestHandler<Body = unknown> = GenericRequestHandler<
-  Record<string, string>,
+export type RequestHandler< params = Record<string, string>, Body = unknown> =
+GenericRequestHandler<
+  params,
 
   //@ts-expect-error: body not readable
   Body
